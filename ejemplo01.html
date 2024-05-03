@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/css/bootstrap.min.css" rel="stylesheet">
+
+  <title>Ejemplo01</title>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1>Crear Usuario</h1>
+    <form id="registroForm" method="POST" action="ejem01.php">
+      <div class="mb-3">
+        <label for="nombre">Nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre_usuario">
+      </div>
+      <div class="mb-3">
+        <label for="correo">Correo</label>
+        <input type="email" class="form-control" id="correo" name="correo_usu">
+      </div>
+      <div class="mb-3">
+        <label for="activo">Activo/Inactivo</label>
+        <select class="form-control" id="activo" name="tipo_usuario">
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="contraseña">Contraseña</label>
+        <input type="password" class="form-control" id="contraseña" name="contraseña_usuario">
+      </div>
+      <button type="submit" class="btn btn-primary">Crear Usuario</button>
+    </form>
+    <div id="mensaje" class="mt-3"></div>
+  </div>
+
+  <!-- Optional JavaScript; choose one of the two! -->
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById("registroForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      var form = this;
+      var formData = new FormData(form);
+
+      fetch(form.action, {
+        method: form.method,
+        body: formData
+      })
+      .then(function(response) {
+        if (response.ok) {
+          document.getElementById("mensaje").innerHTML = '<div class="alert alert-success" role="alert">Usuario registrado exitosamente!</div>';
+          form.reset();
+          setTimeout(function() {
+            document.getElementById("mensaje").innerHTML = '';
+          }, 3000);
+        } else {
+          document.getElementById("mensaje").innerHTML = '<div class="alert alert-danger" role="alert">Error al registrar el usuario. Por favor, inténtalo de nuevo.</div>';
+        }
+      })
+      .catch(function(error) {
+        document.getElementById("mensaje").innerHTML = '<div class="alert alert-danger" role="alert">Error al registrar el usuario. Por favor, inténtalo de nuevo.</div>';
+      });
+    });
+  </script>
+</body>
+</html>
